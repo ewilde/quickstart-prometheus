@@ -1,0 +1,10 @@
+groups:
+- name: example
+  rules:
+  - alert: HighErrorRate
+    expr: http_requests_total{job="prometheus",handler="prometheus"} > 0
+    for: 10m
+    labels:
+      severity: page
+    annotations:
+      summary: High request latency

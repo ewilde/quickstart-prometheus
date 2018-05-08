@@ -4,19 +4,25 @@ services:
     image: quay.io/prometheus/prometheus:v2.0.0
     volumes:
      - ./monitor/prometheus.yml:/etc/prometheus/prometheus.yml
+     - ./monitor/example.rules.yml:/etc/prometheus/example.rules.yml
     command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
     ports:
      - 9090:9090
     depends_on:
      - exporter
+     - alertmanager1
   exporter:
     image: prom/node-exporter:latest
     ports:
      - "9100:9100"
-#    network_mode: host
+  alertmanager1:
+    image: prom/alertmanager:v0.14.0
+    ports:
+     - "9093:9093"
   grafana:
     image: grafana/grafana
     ports:
      - "3000:3000"
     depends_on:
       - prom
+

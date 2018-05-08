@@ -9,7 +9,7 @@ $ git clone https://github.com/alexellis/quickstart-prometheus
 $ cd quickstart-prometheus
 $ docker-compose up -d
 ```
-Open a browser and point at http://localhost:9090/
+Open a browser and point at [http://localhost:9090/](http://localhost:9090/)
 
 ### See also:
 
