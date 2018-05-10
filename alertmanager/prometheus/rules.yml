@@ -3,7 +3,7 @@ groups:
   rules:
   - alert: HighErrorRate
     expr: http_requests_total{job="prometheus",handler="prometheus"} > 0
-    for: 10m
+    for: 10s
     labels:
       severity: page
     annotations:

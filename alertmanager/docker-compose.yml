@@ -1,0 +1,32 @@
+version: "3"
+services:
+  prom:
+    image: quay.io/prometheus/prometheus:v2.0.0
+    volumes:
+     - ./prometheus/config.yml:/etc/prometheus/config.yml
+     - ./prometheus/rules.yml:/etc/prometheus/rules.yml
+    command: "--config.file=/etc/prometheus/config.yml --storage.tsdb.path=/prometheus"
+    ports:
+     - 9090:9090
+    depends_on:
+     - exporter
+     - alertmanager1
+  exporter:
+    image: prom/node-exporter:latest
+    ports:
+     - "9100:9100"
+  alertmanager1:
+    image: prom/alertmanager:v0.14.0
+    volumes:
+      - ./alertmanager/config.yml:/etc/alertmanager/config.yml
+    ports:
+     - "9093:9093"
+  alerttarget:
+    build: alerttarget
+  grafana:
+    image: grafana/grafana
+    ports:
+     - "3000:3000"
+    depends_on:
+      - prom
+
